@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Empleado</title>
+    <script>
+        async function addEmployee(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+
+            try {
+                const response = await fetch('http://localhost:8080/api/employee/add', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ name }),
+                });
+
+                const data = await response.json();
+                console.log(data);
+                alert('Empleado agregado: ' + JSON.stringify(data));
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al agregar empleado');
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Agregar Empleado</h1>
+    <form onsubmit="addEmployee(event)">
+        <label for="name">Nombre:</label>
+        <input type="text" id="name" name="name" required>
+        <button type="submit">Agregar</button>
+    </form>
+</body>
+</html>
